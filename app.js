@@ -121,8 +121,12 @@ const app = (() => {
     if (!data) return;
     currentSection = section;
 
-    clearSearch();
+    // Скрываем результаты поиска, если были
+    els.searchResults.classList.add('hidden');
+    els.searchEmpty.classList.add('hidden');
+    els.searchGrid.innerHTML = '';
 
+    // Переключаем секции
     document.querySelectorAll('.section').forEach((s) => {
       s.classList.add('hidden');
       s.classList.remove('active');
@@ -131,15 +135,6 @@ const app = (() => {
     if (target) {
       target.classList.remove('hidden');
       target.classList.add('active');
-      if (animate) {
-        target.style.opacity = '0';
-        target.style.transform = 'translateY(10px)';
-        requestAnimationFrame(() => {
-          target.style.transition = 'opacity 250ms ease, transform 250ms ease';
-          target.style.opacity = '1';
-          target.style.transform = 'translateY(0)';
-        });
-      }
     }
 
     if (section === 'home') renderRecent();
