@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IT Archive | Личный архив IT-специалиста</title>
+  <meta name="description" content="Статический архив ПО, образов ОС, прошивок и игр на Archive.org" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-zinc-950 text-zinc-100 font-sans antialiased selection:bg-emerald-500 selection:text-zinc-950">
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-zinc-900 border-r border-zinc-800 transform -translate-x-full transition-transform duration-300 ease-in-out sm:translate-x-0 sm:static sm:inset-0 sm:auto sm:z-10">
+    <div class="flex items-center justify-between h-16 px-6 border-b border-zinc-800 bg-zinc-900/50 backdrop-blur">
+      <span class="font-bold text-xl tracking-tighter text-emerald-400">IT<span class="text-zinc-400">ARCHIVE</span></span>
+      <button id="closeSidebar" class="sm:hidden text-zinc-400 hover:text-white transition" aria-label="Закрыть меню"><i class="fas fa-chevron-left"></i></button>
+    </div>
+
+    <nav class="mt-5 px-3 space-y-1">
+      <button onclick="app.switchSection('home')" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg bg-emerald-500/10 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.15)] transition" data-section="home" aria-pressed="true">
+        <i class="fas fa-th-large w-5 text-center"></i><span>Главная</span>
+      </button>
+      <button onclick="app.switchSection('windows')" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-zinc-400 hover:bg-zinc-800 hover:text-white transition" data-section="windows">
+        <i class="fab fa-windows w-5 text-center"></i><span>Windows</span>
+      </button>
+      <button onclick="app.switchSection('android')" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-zinc-400 hover:bg-zinc-800 hover:text-white transition" data-section="android">
+        <i class="fab fa-android w-5 text-center"></i><span>Android</span>
+      </button>
+      <button onclick="app.switchSection('software')" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-zinc-400 hover:bg-zinc-800 hover:text-white transition" data-section="software">
+        <i class="fas fa-cogs w-5 text-center"></i><span>Софт</span>
+      </button>
+      <button onclick="app.switchSection('games')" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-zinc-400 hover:bg-zinc-800 hover:text-white transition" data-section="games">
+        <i class="fas fa-gamepad w-5 text-center"></i><span>Игры</span>
+      </button>
+    </nav>
+
+    <div class="mt-auto border-t border-zinc-800 p-6">
+      <p class="text-xs text-zinc-500 leading-relaxed">Все файлы физически хранятся на <a href="https://archive.org" class="text-emerald-400 hover:text-emerald-300 underline underline-offset-4" target="_blank" rel="noopener">Archive.org</a></p>
+      <p class="text-xs text-zinc-600 mt-1">Static site · GitHub Pages &amp; Netlify</p>
+    </div>
+  </aside>
+
+  <!-- Mobile overlay -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden sm:hidden" onclick="app.toggleSidebar()"></div>
+
+  <!-- App shell -->
+  <div class="flex flex-col sm:ml-64 min-h-screen">
+    <header class="h-16 border-b border-zinc-800 bg-zinc-900/80 backdrop-blur-md sticky top-0 z-30 flex items-center justify-between px-6">
+      <div class="flex items-center gap-4 shrink-0">
+        <button id="openSidebar" class="sm:hidden text-zinc-400 hover:text-white transition" aria-label="Открыть меню"><i class="fas fa-bars"></i></button>
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded bg-zinc-800 flex items-center justify-center text-emerald-400 font-bold text-xs">IA</div>
+          <h1 class="font-bold text-xl tracking-tighter">IT<span class="text-zinc-400">Archive</span></h1>
+        </div>
+      </div>
+
+      <div class="hidden sm:flex flex-1 max-w-xl mx-10">
+        <div class="relative w-full">
+          <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500"></i>
+          <input type="text" id="searchInput" placeholder="Поиск по названию и описанию…" class="w-full pl-10 pr-4 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all" />
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 shrink-0">
+        <span class="hidden sm:flex items-center gap-2 text-xs font-medium text-zinc-500">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Система онлайн
+        </span>
+        <button class="p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition" title="Тема оформления"><i class="fas fa-moon"></i></button>
+      </div>
+    </header>
+    <main class="flex-1 overflow-y-auto p-6 sm:p-8 pb-20">
+      <!-- Search results container -->
+      <div id="search-results" class="hidden mb-8">
+        <div class="flex justify-between items-end mb-6">
+          <h2 class="text-xl font-bold flex items-center gap-2"><i class="fas fa-magnifying-glass text-cyan-400"></i> Результаты поиска</h2>
+          <button onclick="app.clearSearch()" class="text-sm text-zinc-500 hover:text-white">Очистить</button>
+        </div>
+        <div id="search-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+        <div id="search-empty" class="hidden text-center py-10">
+          <div class="text-zinc-600 text-4xl mb-3">🔍</div>
+          <p class="text-zinc-400">Ничего не найдено</p>
+        </div>
+      </div>
+
+      <!-- Home -->
+      <section id="section-home" class="section active">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-5 mb-8">
+          <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-emerald-500/40 transition-all group">
+            <div class="text-emerald-400 text-3xl mb-2"><i class="fas fa-archive"></i></div>
+            <h3 class="text-sm font-semibold text-zinc-400 uppercase tracking-wider">Всего записей</h3>
+            <p class="text-2xl font-bold text-white mt-1" id="stat-total">0</p>
+          </div>
+          <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-cyan-400/40 transition-all group">
+            <div class="text-cyan-400 text-3xl mb-2"><i class="fas fa-layer-group"></i></div>
+            <h3 class="text-sm font-semibold text-zinc-400 uppercase tracking-wider">Разделов</h3>
+            <p class="text-2xl font-bold text-white mt-1" id="stat-categories">4</p>
+          </div>
+          <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-purple-500/40 transition-all group">
+            <div class="text-purple-400 text-3xl mb-2"><i class="fas fa-database"></i></div>
+            <h3 class="text-sm font-semibold text-zinc-400 uppercase tracking-wider">Хранилище</h3>
+            <p class="text-xl font-bold text-white mt-1">Archive.org</p>
+          </div>
+          <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-rose-500/40 transition-all group">
+            <div class="text-rose-400 text-3xl mb-2"><i class="fas fa-fingerprint"></i></div>
+            <h3 class="text-sm font-semibold text-zinc-400 uppercase tracking-wider">Целостность</h3>
+            <p class="text-xl font-bold text-white mt-1">MD5 / SHA256</p>
+          </div>
+        </div>
+
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+          <div>
+            <h2 class="text-xl font-bold flex items-center gap-2"><i class="fas fa-rotate-left text-emerald-400"></i> Последние добавления</h2>
+            <p class="text-zinc-500 text-sm mt-1">Обновления архива</p>
+          </div>
+          <a href="#" onclick="app.switchSection('windows'); return false;" class="text-sm text-emerald-400 hover:text-emerald-300 flex items-center gap-1">Все разделы →</a>
+        </div>
+        <div id="recent-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      </section>
+      <!-- Windows -->
+      <section id="section-windows" class="section hidden">
+        <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          <div>
+            <h2 class="text-2xl font-bold flex items-center gap-3"><i class="fab fa-windows text-emerald-400"></i> Windows</h2>
+            <p class="text-zinc-400 text-sm">Образы ОС, активаторы, системный софт</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button class="filter-chip px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs rounded-full transition">Все</button>
+            <button class="filter-chip px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs rounded-full transition">ISO</button>
+            <button class="filter-chip px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs rounded-full transition">Активаторы</button>
+          </div>
+        </header>
+        <div id="grid-windows" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+      </section>
+
+      <!-- Android -->
+      <section id="section-android" class="section hidden">
+        <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          <div>
+            <h2 class="text-2xl font-bold flex items-center gap-3"><i class="fab fa-android text-emerald-400"></i> Android</h2>
+            <p class="text-zinc-400 text-sm">Прошивки, APK, инструменты прошивки, утилиты</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button class="filter-chip px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs rounded-full transition">Все</button>
+            <button class="filter-chip px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs rounded-full transition">Прошивки</button>
+            <button class="filter-chip px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs rounded-full transition">APK</button>
+          </div>
+        </header>
+        <div id="grid-android" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+      </section>
+
+      <!-- Software -->
+      <section id="section-software" class="section hidden">
+        <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          <div>
+            <h2 class="text-2xl font-bold flex items-center gap-3"><i class="fas fa-cogs text-emerald-400"></i> Софт</h2>
+            <p class="text-zinc-400 text-sm">Утилиты для администрирования, сети, диагностики</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button class="filter-chip px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs rounded-full transition">Все</button>
+            <button class="filter-chip px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs rounded-full transition">Диагностика</button>
+            <button class="filter-chip px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs rounded-full transition">Сеть</button>
+          </div>
+        </header>
+        <div id="grid-software" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+      </section>
+
+      <!-- Games -->
+      <section id="section-games" class="section hidden">
+        <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          <div>
+            <h2 class="text-2xl font-bold flex items-center gap-3"><i class="fas fa-gamepad text-emerald-400"></i> Игры</h2>
+            <p class="text-zinc-400 text-sm">Портативные игры, ретро-хиты, сборники</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button class="filter-chip px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs rounded-full transition">Все</button>
+            <button class="filter-chip px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs rounded-full transition">Портативные</button>
+            <button class="filter-chip px-3 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs rounded-full transition">Ретро</button>
+          </div>
+        </header>
+        <div id="grid-games" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+      </section>
+    </main>
+
+    <footer class="border-t border-zinc-800 bg-zinc-900/50 py-6 text-center text-xs text-zinc-600">
+      <p>IT Archive &copy; <span id="year"></span>. Статический сайт без сборщиков. Файлы на Archive.org.</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
