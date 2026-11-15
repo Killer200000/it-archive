@@ -86,8 +86,15 @@ const app = (() => {
     els.searchResults.classList.add('hidden');
     els.searchGrid.innerHTML = '';
     els.searchEmpty.classList.add('hidden');
-    document.querySelectorAll('.section').forEach((s) => s.classList.add('hidden'));
-    document.getElementById(`section-${currentSection}`).classList.remove('hidden');
+    document.querySelectorAll('.section').forEach((s) => {
+      s.classList.add('hidden');
+      s.classList.remove('active');
+    });
+    const current = document.getElementById(`section-${currentSection}`);
+    if (current) {
+      current.classList.remove('hidden');
+      current.classList.add('active');
+    }
     updateNavActive(currentSection);
   }
 
@@ -116,10 +123,14 @@ const app = (() => {
 
     clearSearch();
 
-    document.querySelectorAll('.section').forEach((s) => s.classList.add('hidden'));
+    document.querySelectorAll('.section').forEach((s) => {
+      s.classList.add('hidden');
+      s.classList.remove('active');
+    });
     const target = document.getElementById(`section-${section}`);
     if (target) {
       target.classList.remove('hidden');
+      target.classList.add('active');
       if (animate) {
         target.style.opacity = '0';
         target.style.transform = 'translateY(10px)';
