@@ -86,15 +86,10 @@ const app = (() => {
     els.searchResults.classList.add('hidden');
     els.searchGrid.innerHTML = '';
     els.searchEmpty.classList.add('hidden');
-    document.querySelectorAll('.section').forEach((s) => {
-      s.classList.add('hidden');
-      s.classList.remove('active');
-    });
+    // Показываем текущую секцию
+    document.querySelectorAll('.section').forEach((s) => s.classList.remove('active'));
     const current = document.getElementById(`section-${currentSection}`);
-    if (current) {
-      current.classList.remove('hidden');
-      current.classList.add('active');
-    }
+    if (current) current.classList.add('active');
     updateNavActive(currentSection);
   }
 
@@ -105,7 +100,7 @@ const app = (() => {
     });
 
     els.searchResults.classList.remove('hidden');
-    document.querySelectorAll('.section').forEach((s) => s.classList.add('hidden'));
+    document.querySelectorAll('.section').forEach((s) => s.classList.remove('active'));
 
     if (results.length === 0) {
       els.searchEmpty.classList.remove('hidden');
@@ -126,16 +121,10 @@ const app = (() => {
     els.searchEmpty.classList.add('hidden');
     els.searchGrid.innerHTML = '';
 
-    // Переключаем секции
-    document.querySelectorAll('.section').forEach((s) => {
-      s.classList.add('hidden');
-      s.classList.remove('active');
-    });
+    // Переключаем секции только через класс active
+    document.querySelectorAll('.section').forEach((s) => s.classList.remove('active'));
     const target = document.getElementById(`section-${section}`);
-    if (target) {
-      target.classList.remove('hidden');
-      target.classList.add('active');
-    }
+    if (target) target.classList.add('active');
 
     if (section === 'home') renderRecent();
     updateNavActive(section);
