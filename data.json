@@ -6,31 +6,11 @@
     "version": "1.0.0"
   },
   "categories": [
-    {
-      "id": "home",
-      "name": "Главная",
-      "icon": "fa-th-large"
-    },
-    {
-      "id": "windows",
-      "name": "Windows",
-      "icon": "fa-windows"
-    },
-    {
-      "id": "android",
-      "name": "Android",
-      "icon": "fa-android"
-    },
-    {
-      "id": "software",
-      "name": "Софт",
-      "icon": "fa-cogs"
-    },
-    {
-      "id": "games",
-      "name": "Игры",
-      "icon": "fa-gamepad"
-    }
+    { "id": "home", "name": "Главная", "icon": "fa-th-large" },
+    { "id": "windows", "name": "Windows", "icon": "fa-windows" },
+    { "id": "android", "name": "Android", "icon": "fa-android" },
+    { "id": "software", "name": "Софт", "icon": "fa-cogs" },
+    { "id": "games", "name": "Игры", "icon": "fa-gamepad" }
   ],
   "items": [
     {
@@ -236,6 +216,6 @@
       "downloadUrl": "https://ia601407.us.archive.org/06/items/mame-collection/MAME_Collection_0.260.7z",
       "archiveUrl": "https://archive.org/details/mame-collection",
       "dateAdded": "2024-03-10"
-      }
+    }
   ]
 }
