@@ -6,11 +6,31 @@
     "version": "1.0.0"
   },
   "categories": [
-    { "id": "home", "name": "Главная", "icon": "fa-th-large" },
-    { "id": "windows", "name": "Windows", "icon": "fa-windows" },
-    { "id": "android", "name": "Android", "icon": "fa-android" },
-    { "id": "software", "name": "Софт", "icon": "fa-cogs" },
-    { "id": "games", "name": "Игры", "icon": "fa-gamepad" }
+    {
+      "id": "home",
+      "name": "Главная",
+      "icon": "fa-th-large"
+    },
+    {
+      "id": "windows",
+      "name": "Windows",
+      "icon": "fa-windows"
+    },
+    {
+      "id": "android",
+      "name": "Android",
+      "icon": "fa-android"
+    },
+    {
+      "id": "software",
+      "name": "Софт",
+      "icon": "fa-cogs"
+    },
+    {
+      "id": "games",
+      "name": "Игры",
+      "icon": "fa-gamepad"
+    }
   ],
   "items": [
     {
@@ -216,6 +236,21 @@
       "downloadUrl": "https://ia601407.us.archive.org/06/items/mame-collection/MAME_Collection_0.260.7z",
       "archiveUrl": "https://archive.org/details/mame-collection",
       "dateAdded": "2024-03-10"
+    },
+    {
+      "id": "software-1794846624781",
+      "category": "software",
+      "title": "Linux",
+      "subtitle": "Ubunty",
+      "description": "Yep",
+      "version": "2.0",
+      "size": "5 GB",
+      "format": "ISO",
+      "badge": "EXE",
+      "icon": "⚙️",
+      "downloadUrl": "https://killer200000.github.io/it-archive/admin.html",
+      "archiveUrl": "https://killer200000.github.io/it-archive/admin.html",
+      "dateAdded": "2026-11-16"
     }
   ]
 }
